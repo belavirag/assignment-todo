@@ -9,8 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TodoItemTest {
 
-    TodoItem getExample()
-    {
+    TodoItem getExample() {
         return new TodoItem(1, "Test Todo", null, LocalDate.now(), false, null);
     }
 

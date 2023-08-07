@@ -7,8 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PersonTest {
 
-    Person getExample()
-    {
+    Person getExample() {
         return new Person(1, "FirstName", "LastName", "email");
     }
 
