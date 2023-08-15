@@ -6,12 +6,26 @@ public class Person {
     private int id;
     private String firstName, lastName;
     private String email;
+    private AppUser credentials;
 
-    public Person(int id, String firstName, String lastName, String email) {
+    public Person(int id, String firstName, String lastName, String email, AppUser credentials) {
         this.id = id;
+        this.credentials = credentials;
         setFirstName(firstName);
         setLastName(lastName);
         setEmail(email);
+    }
+
+    public Person(int id, String firstName, String lastName, String email) {
+        this(id, firstName, lastName, email, null);
+    }
+
+    public AppUser getCredentials() {
+        return credentials;
+    }
+
+    public void setCredentials(AppUser credentials) {
+        this.credentials = credentials;
     }
 
     public int getId() {
@@ -49,8 +63,26 @@ public class Person {
         this.email = email;
     }
 
-    public String getSummary() {
-        return this.toString();
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Person otherPerson) {
+            return  otherPerson.getEmail().equals(this.email) &&
+                    otherPerson.getFirstName().equals(this.firstName) &&
+                    otherPerson.getLastName().equals(this.lastName) &&
+                    otherPerson.getId() == this.id;
+        }
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 524287 * result + firstName.hashCode();
+        result = 524287 * result + lastName.hashCode();
+        result = 524287 * result + email.hashCode();
+
+        return result;
     }
 
     @Override

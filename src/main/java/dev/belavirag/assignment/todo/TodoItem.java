@@ -77,8 +77,28 @@ public class TodoItem {
         return LocalDate.now().isAfter(this.deadLine);
     }
 
-    public String getSummary() {
-        return this.toString();
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 524287 * result + title.hashCode();
+        result = 524287 * result + (description == null ? 0 : description.hashCode());
+        result = 524287 * result + deadLine.hashCode();
+        result = 524287 * result + (done ? 1 : 0);
+
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof TodoItem otherTodoItem) {
+            return  Objects.equals(otherTodoItem.getDescription(), this.description) &&
+                    otherTodoItem.getTitle().equals(this.title) &&
+                    otherTodoItem.getId() == this.id &&
+                    otherTodoItem.deadLine.equals(this.deadLine) &&
+                    otherTodoItem.done == this.done;
+        }
+
+        return false;
     }
 
     @Override
@@ -89,7 +109,6 @@ public class TodoItem {
                 ", description='" + description + '\'' +
                 ", deadLine=" + deadLine +
                 ", done=" + done +
-                ", creator=" + creator +
                 '}';
     }
 }

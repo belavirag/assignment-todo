@@ -49,9 +49,24 @@ public class TodoItemTask {
         this.assignee = assignee;
     }
 
-    public String getSummary()
-    {
-        return this.toString();
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof TodoItemTask otherItemTask) {
+            return  otherItemTask.getTodoItem().equals(this.todoItem) &&
+                    otherItemTask.isAssigned() == this.assigned &&
+                    otherItemTask.getId() == this.id;
+        }
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 524287 * result + (assigned ? 1 : 0);
+        result = 524287 * result + (todoItem != null ? todoItem.hashCode() : 0);
+
+        return result;
     }
 
     @Override
@@ -60,7 +75,6 @@ public class TodoItemTask {
                 "id=" + id +
                 ", assigned=" + assigned +
                 ", todoItem=" + todoItem +
-                ", assignee=" + assignee +
                 '}';
     }
 }

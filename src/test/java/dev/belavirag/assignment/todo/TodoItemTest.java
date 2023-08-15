@@ -46,4 +46,17 @@ class TodoItemTest {
         item.setDeadLine(LocalDate.now().minusDays(1));
         assertTrue(item.isOverdue());
     }
+
+    @Test
+    void hashCodeAndEquals() {
+        TodoItem item1 = getExample();
+        item1.setCreator(new Person(2, "RandomFirstName", "RandomLastName", "hello@example.org")); // ignore Person objects
+        TodoItem item2 = getExample();
+        TodoItem item3 = new TodoItem(3, "A Random Title", "Something idk", LocalDate.now().plusDays(7), false, null);
+
+        assertEquals(item1, item2);
+        assertNotEquals(item1, item3);
+        assertEquals(item1.hashCode(), item2.hashCode());
+        assertNotEquals(item1.hashCode(), item3.hashCode());
+    }
 }
