@@ -5,10 +5,10 @@ import java.util.Objects;
 public class TodoItemTask {
     private int id;
     private boolean assigned;
-    private TodoItem todoItem;
+    private Todo todoItem;
     private Person assignee;
 
-    public TodoItemTask(int id, boolean assigned, TodoItem todoItem, Person assignee) {
+    public TodoItemTask(int id, boolean assigned, Todo todoItem, Person assignee) {
         this.id = id;
         this.assigned = assigned;
         setTodoItem(todoItem);
@@ -31,11 +31,11 @@ public class TodoItemTask {
         this.assigned = assigned;
     }
 
-    public TodoItem getTodoItem() {
+    public Todo getTodoItem() {
         return todoItem;
     }
 
-    public void setTodoItem(TodoItem todoItem) {
+    public void setTodoItem(Todo todoItem) {
         Objects.requireNonNull(todoItem, "todoItem cannot be null!");
         this.todoItem = todoItem;
     }

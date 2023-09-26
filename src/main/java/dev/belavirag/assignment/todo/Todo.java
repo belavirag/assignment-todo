@@ -1,23 +1,33 @@
 package dev.belavirag.assignment.todo;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class TodoItem {
+public class Todo {
     private int id;
     private String title;
     private String description;
     private LocalDate deadLine;
     private boolean done;
-    private Person creator;
+    private Person assignee;
 
-    public TodoItem(int id, String title, String description, LocalDate deadLine, boolean done, Person creator) {
+    public Todo(int id, String title, String description, LocalDate deadLine, boolean done, Person assignee) {
         this.id = id;
-        setTitle(title);
-        setDescription(description);
-        setDeadLine(deadLine);
+        this.title = title;
+        this.description = description;
+        this.deadLine = deadLine;
         this.done = done;
-        this.creator = creator;
+        this.assignee = assignee;
+    }
+
+    public Todo(String title, String description, LocalDate deadLine, boolean done, Person assignee) {
+        this.title = title;
+        this.description = description;
+        this.deadLine = deadLine;
+        this.done = done;
+        this.assignee = assignee;
     }
 
     public int getId() {
@@ -33,10 +43,6 @@ public class TodoItem {
     }
 
     public void setTitle(String title) {
-        Objects.requireNonNull(title, "title cannot be null!");
-        if (title.isEmpty()) {
-            throw new IllegalArgumentException("title is not allowed to be empty!");
-        }
         this.title = title;
     }
 
@@ -53,7 +59,6 @@ public class TodoItem {
     }
 
     public void setDeadLine(LocalDate deadLine) {
-        Objects.requireNonNull(deadLine, "deadLine cannot be null!");
         this.deadLine = deadLine;
     }
 
@@ -65,16 +70,25 @@ public class TodoItem {
         this.done = done;
     }
 
-    public Person getCreator() {
-        return creator;
+    public Person getAssignee() {
+        return assignee;
     }
 
-    public void setCreator(Person creator) {
-        this.creator = creator;
+    public void setAssignee(Person assignee) {
+        this.assignee = assignee;
     }
 
     public boolean isOverdue() {
         return LocalDate.now().isAfter(this.deadLine);
+    }
+
+    public static Todo fromResultSet(ResultSet resultSet, Person p) throws SQLException {
+        return new Todo(resultSet.getInt("todo_id"),
+                resultSet.getString("title"),
+                resultSet.getString("description"),
+                resultSet.getDate("deadline").toLocalDate(),
+                resultSet.getBoolean("done"),
+                p);
     }
 
     @Override
@@ -90,7 +104,7 @@ public class TodoItem {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof TodoItem otherTodoItem) {
+        if (obj instanceof Todo otherTodoItem) {
             return  Objects.equals(otherTodoItem.getDescription(), this.description) &&
                     otherTodoItem.getTitle().equals(this.title) &&
                     otherTodoItem.getId() == this.id &&
@@ -103,12 +117,13 @@ public class TodoItem {
 
     @Override
     public String toString() {
-        return "TodoItem{" +
+        return "Todo{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", deadLine=" + deadLine +
                 ", done=" + done +
+                ", assignee=" + assignee +
                 '}';
     }
 }

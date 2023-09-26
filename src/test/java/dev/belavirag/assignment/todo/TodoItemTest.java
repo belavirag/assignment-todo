@@ -9,36 +9,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TodoItemTest {
 
-    TodoItem getExample() {
-        return new TodoItem(1, "Test Todo", null, LocalDate.now(), false, null);
-    }
-
-    @Test
-    void setTitle() {
-        TodoItem item = getExample();
-        NullPointerException thrown = Assertions.assertThrows(NullPointerException.class, () -> {
-            item.setTitle(null);
-        });
-        IllegalArgumentException thrown2 = Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            item.setTitle("");
-        });
-
-        assertEquals("title cannot be null!", thrown.getMessage());
-        assertEquals("title is not allowed to be empty!", thrown2.getMessage());
-    }
-
-    @Test
-    void setDeadLine() {
-        TodoItem item = getExample();
-        NullPointerException thrown = Assertions.assertThrows(NullPointerException.class, () -> {
-            item.setDeadLine(null);
-        });
-        assertEquals("deadLine cannot be null!", thrown.getMessage());
+    Todo getExample() {
+        return new Todo(1, "Test Todo", null, LocalDate.now(), false, null);
     }
 
     @Test
     void isOverdue() {
-        TodoItem item = getExample();
+        Todo item = getExample();
 
         item.setDeadLine(LocalDate.now().plusDays(1));
         assertFalse(item.isOverdue());
@@ -49,10 +26,10 @@ class TodoItemTest {
 
     @Test
     void hashCodeAndEquals() {
-        TodoItem item1 = getExample();
-        item1.setCreator(new Person(2, "RandomFirstName", "RandomLastName", "hello@example.org")); // ignore Person objects
-        TodoItem item2 = getExample();
-        TodoItem item3 = new TodoItem(3, "A Random Title", "Something idk", LocalDate.now().plusDays(7), false, null);
+        Todo item1 = getExample();
+        item1.setAssignee(new Person(2, "RandomFirstName", "RandomLastName")); // ignore Person objects
+        Todo item2 = getExample();
+        Todo item3 = new Todo(3, "A Random Title", "Something idk", LocalDate.now().plusDays(7), false, null);
 
         assertEquals(item1, item2);
         assertNotEquals(item1, item3);

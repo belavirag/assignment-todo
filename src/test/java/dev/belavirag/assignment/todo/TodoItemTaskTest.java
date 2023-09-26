@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class TodoItemTaskTest {
 
     TodoItemTask getExample() {
-        return new TodoItemTask(1, false, new TodoItem(1, "Test Title", null, LocalDate.now(), false, null), null);
+        return new TodoItemTask(1, false, new Todo(1, "Test Title", null, LocalDate.now(), false, null), null);
     }
 
     @Test
@@ -19,7 +19,7 @@ class TodoItemTaskTest {
 
         itemTask.setAssignee(null);
         assertFalse(itemTask.isAssigned());
-        itemTask.setAssignee(new Person(1, "FirstName", "LastName", "email"));
+        itemTask.setAssignee(new Person(1, "FirstName", "LastName"));
         assertTrue(itemTask.isAssigned());
     }
 
@@ -36,10 +36,10 @@ class TodoItemTaskTest {
     @Test
     void hashCodeAndEquals() {
         TodoItemTask item1 = getExample();
-        item1.setAssignee(new Person(2, "RandomFirstName", "RandomLastName", "hello@example.org")); // ignore Person objects
+        item1.setAssignee(new Person(2, "RandomFirstName", "RandomLastName")); // ignore Person objects
         TodoItemTask item2 = getExample();
         item2.setAssigned(true);
-        TodoItemTask item3 = new TodoItemTask(3, false, new TodoItem(2, "A Todo Item", null, LocalDate.now().plusDays(4), false, null), null);
+        TodoItemTask item3 = new TodoItemTask(3, false, new Todo(2, "A Todo Item", null, LocalDate.now().plusDays(4), false, null), null);
 
         assertEquals(item1, item2);
         assertNotEquals(item1, item3);
