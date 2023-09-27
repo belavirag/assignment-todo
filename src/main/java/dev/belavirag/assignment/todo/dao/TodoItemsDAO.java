@@ -180,8 +180,7 @@ public class TodoItemsDAO implements TodoItems {
             return rowsChanged == 1;
         } catch (SQLException e) {
             System.err.println("Failed to delete by id");
+            throw new RuntimeException(e);
         }
-
-        return false;
     }
 }

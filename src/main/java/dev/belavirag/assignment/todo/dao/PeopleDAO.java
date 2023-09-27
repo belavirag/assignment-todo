@@ -130,8 +130,7 @@ public class PeopleDAO implements People {
             return rowsChanged == 1;
         } catch (SQLException e) {
             System.err.println("Failed to delete by id");
+            throw new RuntimeException(e);
         }
-
-        return false;
     }
 }
